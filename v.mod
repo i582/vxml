@@ -1,8 +1,8 @@
 Module {
-	name: 'vwxml'
-	author: 'zenith391'
-	version: '0.9.0'
-	repo_url: 'https://github.com/zenith391/vwxml'
+	name: 'vxml'
+	author: 'walkingdevel'
+	version: '0.0.1'
+	repo_url: 'https://github.com/walkingdevel/vxml'
 	vcs: 'git'
 	tags: ['xml', 'dom']
 	category: 'xml'

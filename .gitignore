@@ -1,6 +1,11 @@
-# Executables files
-xml_test
-xml_test.exe
+.vscode
+.DS_Store
 
-# Temporary files
-fns.txt
+vxml_test
+
+*.exe
+*.exe~
+*.so
+*.dylib
+*.dll
+vls.log
