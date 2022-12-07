@@ -41,7 +41,7 @@ pub fn (node Node) get_element_by_tag_name(name string) !&Node {
 
 pub fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node {
 	mut nodes := node.get_elements_by_tag_name('*')
-	mut found_nodes := []&Node{}
+	mut found_nodes := []&Node{cap: nodes.len}
 
 	for item in nodes {
 		if predicate(item) {
