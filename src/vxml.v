@@ -79,6 +79,10 @@ pub fn parse(xml string) Node {
 					current_node = current_node.parent
 
 					state = ParserState{}
+				} else if tag_name.starts_with('!') {
+					state = ParserState{}
+
+					continue
 				} else if tag_name.starts_with('?') { // NOTE: incomplete test
 					if state.attribute_key != '' {
 						state.save_attribute()
