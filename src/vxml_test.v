@@ -21,7 +21,7 @@ fn test_escape() {
 	thing := root.childrens.first()
 
 	assert thing.text == '<Hello>'
-	assert thing.attributes.first().value == 'Morning & Co.'
+	assert thing.attributes['abc'] == 'Morning & Co.'
 }
 
 fn test_xml_file() {
@@ -61,7 +61,7 @@ fn test_html_file() {
 	assert head.childrens[0].name == 'title'
 	assert head.childrens[0].text == 'Test'
 	assert head.childrens[1].name == 'meta'
-	assert head.childrens[1].attributes.first().name == 'charset'
+	assert head.childrens[1].attributes['charset'] == 'utf-8'
 
 	body := html.childrens[1]
 	assert body.name == 'body'
@@ -70,9 +70,7 @@ fn test_html_file() {
 	assert body.childrens[0].text == 'Test'
 	assert body.childrens[1].name == 'br'
 	assert body.childrens[2].name == 'p'
-	assert body.childrens[2].attributes.first().name == 'style'
-	assert body.childrens[2].attributes.first().value == 'color: red'
+	assert body.childrens[2].attributes['style'] == 'color: red'
 	assert body.childrens[3].name == 'img'
-	assert body.childrens[3].attributes.first().name == 'src'
-	assert body.childrens[3].attributes.first().value == 'test.png'
+	assert body.childrens[3].attributes['src'] == 'test.png'
 }

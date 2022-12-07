@@ -49,7 +49,7 @@ pub fn parse(xml string) Node {
 			if symbol == `>` {
 				state.in_head_tag = false
 				state.in_attribute_key = false
-				state.in_attribute_val = false
+				state.in_attribute_value = false
 
 				tag_name := state.head_tag_string.trim_space()
 				last_tag_name_symbol := state.word.trim_space().trim_right('>')
@@ -63,11 +63,11 @@ pub fn parse(xml string) Node {
 					state = ParserState{}
 				} else if tag_name.ends_with('/') || last_tag_name_symbol.ends_with('/') {
 					if state.attribute_key != '' {
-						state.push_attribute()
+						state.save_attribute()
 					}
 
 					state.attribute_key = ''
-					state.attribute_val = ''
+					state.attribute_value = ''
 
 					current_node = &Node{
 						attributes: state.tag_attributes
@@ -81,19 +81,14 @@ pub fn parse(xml string) Node {
 					state = ParserState{}
 				} else if tag_name.starts_with('?') { // NOTE: incomplete test
 					if state.attribute_key != '' {
-						state.push_attribute()
+						state.save_attribute()
 					}
 
-					state.attribute_key = ''
-					state.attribute_val = ''
-					state.tag_attributes = []
+					state.clear_attribute()
 				} else {
 					if state.attribute_key != '' {
-						state.push_attribute()
+						state.save_attribute()
 					}
-
-					state.attribute_key = ''
-					state.attribute_val = ''
 
 					current_node = &Node{
 						attributes: state.tag_attributes
@@ -101,33 +96,33 @@ pub fn parse(xml string) Node {
 						parent: current_node
 					}
 
-					state.tag_attributes = []
+					state.clear_attribute()
 				}
 			} else {
 				if !state.in_string && symbol == ` ` {
 					state.in_attribute_key = true
-					state.in_attribute_val = false
+					state.in_attribute_value = false
 
 					if state.attribute_key != '' {
-						state.push_attribute()
+						state.save_attribute()
 					}
 
 					state.attribute_key = ''
-					state.attribute_val = ''
-				} else if state.in_attribute_key || state.in_attribute_val {
+					state.attribute_value = ''
+				} else if state.in_attribute_key || state.in_attribute_value {
 					if state.in_attribute_key {
 						if symbol == `=` {
 							state.in_attribute_key = false
-							state.in_attribute_val = true
+							state.in_attribute_value = true
 						} else {
 							state.attribute_key = state.attribute_key + symbol.str()
 						}
-					} else if state.in_attribute_val {
+					} else if state.in_attribute_value {
 						// TODO: not allow to open with " and finish with '
 						if symbol == `"` || symbol == `'` {
 							state.in_string = !state.in_string
 						} else if state.in_string {
-							state.attribute_val = state.attribute_val + symbol.str()
+							state.attribute_value = state.attribute_value + symbol.str()
 						}
 					}
 				} else {
