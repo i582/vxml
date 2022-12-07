@@ -25,7 +25,7 @@ fn (node Node) get_text() string
 ## Example.
 
 ```v
-import vxml
+import vxml { parse_file }
 
 fn main() {
   news := parse_file('./news.xml') or { panic(err) }
