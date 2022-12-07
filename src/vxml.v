@@ -5,6 +5,8 @@ import os
 const (
 	comment_start = '<!--'
 	comment_end   = '-->'
+	cdata_start   = '<![CDATA['
+	cdata_end     = ']]>'
 )
 
 pub fn parse_file(path string) !Node {
@@ -20,13 +22,26 @@ pub fn parse(xml string) Node {
 	}
 
 	mut state := ParserState{}
+	mut prev_state := ParserState{}
 	mut current_node := &root
 
 	for symbol in xml.runes() {
-		state.word = state.word + symbol.str()
+		state.word += symbol.str()
 
 		if symbol == ` ` || !can_be_included(symbol) {
 			state.clear_word()
+		}
+
+		if state.in_cdata {
+			state.tag_text += symbol.str()
+
+			if state.word.ends_with(cdata_end) {
+				current_node.cdata += state.tag_text.trim_right(cdata_end)
+
+				state = prev_state
+			}
+
+			continue
 		}
 
 		if state.in_comment {
@@ -46,10 +61,19 @@ pub fn parse(xml string) Node {
 		}
 
 		if state.in_head_tag {
+			if state.word.starts_with(cdata_start) {
+				state.end_tag()
+
+				prev_state = state
+				state = ParserState{
+					in_cdata: true
+				}
+
+				continue
+			}
+
 			if symbol == `>` {
-				state.in_head_tag = false
-				state.in_attribute_key = false
-				state.in_attribute_value = false
+				state.end_tag()
 
 				tag_name := state.head_tag_string.trim_space()
 				last_tag_name_symbol := state.word.trim_space().trim_right('>')
@@ -119,19 +143,19 @@ pub fn parse(xml string) Node {
 							state.in_attribute_key = false
 							state.in_attribute_value = true
 						} else {
-							state.attribute_key = state.attribute_key + symbol.str()
+							state.attribute_key += symbol.str()
 						}
 					} else if state.in_attribute_value {
 						// TODO: not allow to open with " and finish with '
 						if symbol == `"` || symbol == `'` {
 							state.in_string = !state.in_string
 						} else if state.in_string {
-							state.attribute_value = state.attribute_value + symbol.str()
+							state.attribute_value += symbol.str()
 						}
 					}
 				} else {
 					if can_be_included(symbol) {
-						state.head_tag_string = state.head_tag_string + symbol.str()
+						state.head_tag_string += symbol.str()
 					}
 				}
 			}
@@ -140,7 +164,7 @@ pub fn parse(xml string) Node {
 				state.in_head_tag = true
 				state.head_tag_string = ''
 			} else {
-				state.tag_text = state.tag_text + symbol.str()
+				state.tag_text += symbol.str()
 			}
 		}
 	}

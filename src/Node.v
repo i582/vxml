@@ -5,12 +5,9 @@ pub mut:
 	attributes map[string]string
 	name       string
 	text       string
+	cdata      string
 	childrens  []&Node
 	parent     &Node
-}
-
-pub fn (node Node) str() string {
-	return 'Node{name=${node.name}, text=${node.text}, childrens=${node.childrens}, attributes=${node.attributes}}'
 }
 
 pub fn (node Node) get_elements_by_tag_name(name string) []&Node {
