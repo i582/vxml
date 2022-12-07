@@ -12,8 +12,9 @@ pub mut:
 
 pub fn (node Node) get_elements_by_tag_name(name string) []&Node {
 	mut nodes := []&Node{}
+	is_root := node.parent == unsafe { nil }
 
-	if node.name == name {
+	if !is_root && (name == '*' || node.name == name) {
 		nodes << &node
 	}
 
@@ -36,6 +37,19 @@ pub fn (node Node) get_element_by_tag_name(name string) !&Node {
 	}
 
 	return error('Node not found')
+}
+
+pub fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node {
+	mut nodes := node.get_elements_by_tag_name('*')
+	mut found_nodes := []&Node{}
+
+	for item in nodes {
+		if predicate(item) {
+			found_nodes << item
+		}
+	}
+
+	return found_nodes
 }
 
 pub fn (node Node) get_attribute(name string) !string {

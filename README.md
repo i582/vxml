@@ -18,6 +18,7 @@ fn parse_file(path string) !Node
 
 fn (node Node) get_elements_by_tag_name(name string) []&Node
 fn (node Node) get_element_by_tag_name(name string) !&Node
+fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node
 fn (node Node) get_attribute(name string) !string
 fn (node Node) get_text() string
 fn (node Node) get_cdata() string

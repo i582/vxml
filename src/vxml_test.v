@@ -132,3 +132,21 @@ fn test_get_elements_by_tag_name() {
 	assert div.name == 'div'
 	assert div.childrens.len == 1
 }
+
+fn test_get_elements_by_predicate() {
+	root := parse_file('./fixtures/tags.html') or { panic(err) }
+
+	nodes := root.get_elements_by_predicate(fn (node &Node) bool {
+		return node.name == 'input' || node.name == 'button'
+	})
+
+	assert nodes.len == 4
+}
+
+fn test_get_all_elements() {
+	root := parse_file('./fixtures/tags.html') or { panic(err) }
+
+	nodes := root.get_elements_by_tag_name('*')
+
+	assert nodes.len == 9
+}
