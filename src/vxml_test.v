@@ -86,7 +86,7 @@ fn test_html_file() {
 	h1 := body.childrens[0]
 	assert h1.name == 'h1'
 	assert h1.get_text() == 'Test'
-	assert h1.cdata.trim_space() == '< > &'
+	assert h1.get_cdata().trim_space() == '< > &'
 
 	br := body.childrens[1]
 	assert br.name == 'br'
@@ -95,7 +95,7 @@ fn test_html_file() {
 	p := body.childrens[2]
 	assert p.name == 'p'
 	assert p.get_attribute('style')! == 'color: red'
-	assert p.cdata.trim_space() == 'test'
+	assert p.get_cdata().trim_space() == 'test'
 
 	image := body.childrens[3]
 	assert image.name == 'img'

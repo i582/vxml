@@ -49,3 +49,7 @@ pub fn (node Node) get_attribute(name string) !string {
 pub fn (node Node) get_text() string {
 	return node.text
 }
+
+pub fn (node Node) get_cdata() string {
+	return node.cdata
+}
