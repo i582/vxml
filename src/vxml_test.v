@@ -65,7 +65,7 @@ fn test_html_file() {
 
 	body := html.childrens[1]
 	assert body.name == 'body'
-	assert body.childrens.len == 4
+	assert body.childrens.len == 5
 	assert body.childrens[0].name == 'h1'
 	assert body.childrens[0].text == 'Test'
 	assert body.childrens[1].name == 'br'
@@ -73,4 +73,6 @@ fn test_html_file() {
 	assert body.childrens[2].attributes['style'] == 'color: red'
 	assert body.childrens[3].name == 'img'
 	assert body.childrens[3].attributes['src'] == 'test.png'
+	assert body.childrens[4].name == 'script'
+	assert body.childrens[4].text.trim_space() == 'alert(true);'
 }
