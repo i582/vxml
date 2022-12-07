@@ -7,7 +7,7 @@ Pure V library for parsing XML. The data is accessed with a tree API accessible 
 ## Install.
 
 ```sh
-v install https://github.com/walkingdevel/vxml
+v install walkingdevel.vxml
 ```
 
 ## Usage.
