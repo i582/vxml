@@ -1,7 +1,7 @@
 module vxml
 
 // Node is a struct that represents a node in the DOM tree.
-struct Node {
+pub struct Node {
 pub mut:
 	attributes map[string]string
 	name       string
