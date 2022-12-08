@@ -146,7 +146,9 @@ fn test_get_elements_by_predicate() {
 fn test_get_all_elements() {
 	root := parse_file('./fixtures/tags.html') or { panic(err) }
 
-	nodes := root.get_elements_by_tag_name('*')
+	nodes := root.get_elements_by_predicate(fn (node &Node) bool {
+		return true
+	})
 
 	assert nodes.len == 9
 }
