@@ -1,16 +1,32 @@
 # vxml
 
+[![Project status](https://img.shields.io/github/release/walkingdevel/vxml.svg)](https://github.com/walkingdevel/vxml/releases/latest)
+[![V modules reference](https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10)](#TODO)
+[![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/walkingdevel/vxml/master/LICENSE)
+
 Pure V library for parsing XML. The data is accessed with a tree API accessible directly within the `Node` struct.
 
-## This library is now alive.
-
-## Install.
+## Install
 
 ```sh
 v install walkingdevel.vxml
 ```
 
-## Usage.
+## Example
+
+```v
+import walkingdevel.vxml { parse_file }
+
+fn main() {
+  news := parse_file('./news.xml') or { panic(err) }
+
+  posts := news.get_elements_by_tag_name('post')
+
+  println(posts.first().get_text())
+}
+```
+
+## API
 
 ```v
 fn parse(xml string) Node
@@ -35,22 +51,13 @@ fn (node Node) get_text() string
 fn (node Node) get_cdata() string
 ```
 
-## Example.
+## Roadmap
 
-```v
-import vxml { parse_file }
-
-fn main() {
-  news := parse_file('./news.xml') or { panic(err) }
-
-  posts := news.get_elements_by_tag_name('post')
-
-  println(posts.first().get_text())
-}
-```
-
-It doesn't support (yet):
 - Error handling
 - Schemas (DTD)
 
-The features listed above will all be supported soon.
+## License
+
+This project is under the **MIT License**. See the 
+[LICENSE](https://github.com/walkingdevel/vxml/blob/master/LICENSE) 
+file for the full license text.

@@ -9,12 +9,25 @@ const (
 	cdata_end     = ']]>'
 )
 
+// parse_file parses the given file and returns the root node.
+// If the file does not exist, an error is returned.
+//
+// Example:
+// ```
+// root := vxml.parse_file('test.xml') or { panic(err) }
+// ```
 pub fn parse_file(path string) !Node {
 	content := os.read_file(path)!
 
 	return parse(content)
 }
 
+// parse parses the given string and returns the root node.
+//
+// Example:
+// ```
+// root := vxml.parse('<root></root>') or { panic(err) }
+// ```
 pub fn parse(xml string) Node {
 	mut root := Node{
 		name: '_root_'

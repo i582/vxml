@@ -25,7 +25,7 @@ fn test_escape() {
 }
 
 fn test_xml_file() {
-	root := parse_file('./fixtures/test.xml') or { panic(err) }
+	root := parse_file('./tests/fixtures/test.xml') or { panic(err) }
 	assert root.children.len == 1
 
 	project := root.children.first()
@@ -60,7 +60,7 @@ fn test_xml_file() {
 }
 
 fn test_html_file() {
-	root := parse_file('./fixtures/test.html') or { panic(err) }
+	root := parse_file('./tests/fixtures/test.html') or { panic(err) }
 	assert root.children.len == 1
 
 	html := root.children.first()
@@ -107,7 +107,7 @@ fn test_html_file() {
 }
 
 fn test_get_elements_by_tag_name() {
-	root := parse_file('./fixtures/tags.html') or { panic(err) }
+	root := parse_file('./tests/fixtures/tags.html') or { panic(err) }
 
 	nodes := root.get_elements_by_tag_name('input')
 
@@ -134,7 +134,7 @@ fn test_get_elements_by_tag_name() {
 }
 
 fn test_get_elements_by_predicate() {
-	root := parse_file('./fixtures/tags.html') or { panic(err) }
+	root := parse_file('./tests/fixtures/tags.html') or { panic(err) }
 
 	nodes := root.get_elements_by_predicate(fn (node &Node) bool {
 		return node.name == 'input' || node.name == 'button'
@@ -144,7 +144,7 @@ fn test_get_elements_by_predicate() {
 }
 
 fn test_get_all_elements() {
-	root := parse_file('./fixtures/tags.html') or { panic(err) }
+	root := parse_file('./tests/fixtures/tags.html') or { panic(err) }
 
 	nodes := root.get_elements_by_predicate(fn (node &Node) bool {
 		return true

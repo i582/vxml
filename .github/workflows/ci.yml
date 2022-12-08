@@ -1,0 +1,22 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  ubuntu-fast-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Latest V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+          path: v
+      - name: Build V
+        run: cd v && make && sudo ./v symlink && cd -
+      - name: Checkout vxml (for tests)
+        uses: actions/checkout@v2
+        with:
+          path: vxml
+
+      - name: Run tests
+        run: cd vxml && v test .
