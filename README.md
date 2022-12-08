@@ -1,6 +1,7 @@
 # vxml
 
 [![Project status](https://img.shields.io/github/release/walkingdevel/vxml.svg)](https://github.com/walkingdevel/vxml/releases/latest)
+[![Test](https://github.com/walkingdevel/vxml/actions/workflows/ci.yml/badge.svg)](https://github.com/walkingdevel/vxml/actions/workflows/ci.yml)
 [![V modules reference](https://img.shields.io/badge/modules-reference-027d9c?logo=v&logoColor=white&logoWidth=10)](#TODO)
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/walkingdevel/vxml/master/LICENSE)
 
