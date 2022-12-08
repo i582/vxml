@@ -6,7 +6,7 @@ pub mut:
 	name       string
 	text       string
 	cdata      string
-	childrens  []&Node
+	children   []&Node
 	parent     &Node
 }
 
@@ -18,7 +18,7 @@ pub fn (node Node) get_elements_by_tag_name(name string) []&Node {
 		nodes << &node
 	}
 
-	for child in node.childrens {
+	for child in node.children {
 		nodes << child.get_elements_by_tag_name(name)
 	}
 
@@ -30,7 +30,7 @@ pub fn (node Node) get_element_by_tag_name(name string) !&Node {
 		return &node
 	}
 
-	for child in node.childrens {
+	for child in node.children {
 		return child.get_element_by_tag_name(name) or { continue }
 	}
 
@@ -45,7 +45,7 @@ pub fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node 
 		nodes << &node
 	}
 
-	for child in node.childrens {
+	for child in node.children {
 		nodes << child.get_elements_by_predicate(predicate)
 	}
 

@@ -3,13 +3,13 @@ module vxml
 fn test_static_xml() {
 	root := parse('<thing abc="test"><test>Hello</test></thing>')
 
-	thing := root.childrens.first()
+	thing := root.children.first()
 
 	assert thing.name == 'thing'
 	assert thing.attributes.len == 1
-	assert thing.childrens.len == 1
+	assert thing.children.len == 1
 
-	test := thing.childrens.first()
+	test := thing.children.first()
 
 	assert test.name == 'test'
 	assert test.get_text() == 'Hello'
@@ -18,7 +18,7 @@ fn test_static_xml() {
 fn test_escape() {
 	root := parse('<thing abc="Morning &amp; Co.">&lt;Hello&gt;</thing>')
 
-	thing := root.childrens.first()
+	thing := root.children.first()
 
 	assert thing.text == '<Hello>'
 	assert thing.get_attribute('abc')! == 'Morning & Co.'
@@ -26,82 +26,82 @@ fn test_escape() {
 
 fn test_xml_file() {
 	root := parse_file('./fixtures/test.xml') or { panic(err) }
-	assert root.childrens.len == 1
+	assert root.children.len == 1
 
-	project := root.childrens.first()
+	project := root.children.first()
 	assert project.name == 'project'
-	assert project.childrens.len == 2
+	assert project.children.len == 2
 
-	data := project.childrens.first()
+	data := project.children.first()
 	assert data.name == 'data'
-	assert data.childrens.len == 4
+	assert data.children.len == 4
 
-	empty_line1 := data.childrens[0]
+	empty_line1 := data.children[0]
 	assert empty_line1.name == 'empty-line'
 
-	cell1 := data.childrens[1]
+	cell1 := data.children[1]
 	assert cell1.name == 'cell'
 
-	cell2 := data.childrens[2]
+	cell2 := data.children[2]
 	assert cell2.name == 'cell'
 
-	empty_line2 := data.childrens[3]
+	empty_line2 := data.children[3]
 	assert empty_line2.name == 'empty-line'
 
-	metadata := project.childrens[1]
+	metadata := project.children[1]
 	assert metadata.name == 'metadata'
-	assert metadata.childrens.len == 2
+	assert metadata.children.len == 2
 
-	text := metadata.childrens[0]
+	text := metadata.children[0]
 	assert text.name == 'text'
 
-	br := metadata.childrens[1]
+	br := metadata.children[1]
 	assert br.name == 'br'
 }
 
 fn test_html_file() {
 	root := parse_file('./fixtures/test.html') or { panic(err) }
-	assert root.childrens.len == 1
+	assert root.children.len == 1
 
-	html := root.childrens.first()
+	html := root.children.first()
 	assert html.name == 'html'
-	assert html.childrens.len == 2
+	assert html.children.len == 2
 
-	head := html.childrens.first()
+	head := html.children.first()
 	assert head.name == 'head'
-	assert head.childrens.len == 2
+	assert head.children.len == 2
 
-	title := head.childrens[0]
+	title := head.children[0]
 	assert title.name == 'title'
 	assert title.get_text() == 'Test'
 
-	meta := head.childrens[1]
+	meta := head.children[1]
 	assert meta.name == 'meta'
 	assert meta.get_attribute('charset')! == 'utf-8'
 
-	body := html.childrens[1]
+	body := html.children[1]
 	assert body.name == 'body'
-	assert body.childrens.len == 5
+	assert body.children.len == 5
 
-	h1 := body.childrens[0]
+	h1 := body.children[0]
 	assert h1.name == 'h1'
 	assert h1.get_text() == 'Test'
 	assert h1.get_cdata().trim_space() == '< > &'
 
-	br := body.childrens[1]
+	br := body.children[1]
 	assert br.name == 'br'
 	assert br.get_text() == ''
 
-	p := body.childrens[2]
+	p := body.children[2]
 	assert p.name == 'p'
 	assert p.get_attribute('style')! == 'color: red'
 	assert p.get_cdata().trim_space() == 'test'
 
-	image := body.childrens[3]
+	image := body.children[3]
 	assert image.name == 'img'
 	assert image.get_attribute('src')! == 'test.png'
 
-	script := body.childrens[4]
+	script := body.children[4]
 	assert script.name == 'script'
 	assert script.get_text().trim_space() == 'alert(true);'
 }
@@ -130,7 +130,7 @@ fn test_get_elements_by_tag_name() {
 
 	div := root.get_element_by_tag_name('div')!
 	assert div.name == 'div'
-	assert div.childrens.len == 1
+	assert div.children.len == 1
 }
 
 fn test_get_elements_by_predicate() {

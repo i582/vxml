@@ -81,7 +81,7 @@ pub fn parse(xml string) Node {
 				if tag_name.starts_with('/') {
 					current_node.text = unescape_string(state.tag_text).trim_space()
 
-					current_node.parent.childrens << current_node
+					current_node.parent.children << current_node
 					current_node = current_node.parent
 
 					state = ParserState{}
@@ -99,7 +99,7 @@ pub fn parse(xml string) Node {
 						parent: current_node
 					}
 
-					current_node.parent.childrens << current_node
+					current_node.parent.children << current_node
 					current_node = current_node.parent
 
 					state = ParserState{}
