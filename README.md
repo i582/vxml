@@ -16,6 +16,17 @@ v install walkingdevel.vxml
 fn parse(xml string) Node
 fn parse_file(path string) !Node
 
+struct Node {
+pub mut:
+        attributes map[string]string
+        name       string
+        text       string
+        cdata      string
+        children   []&Node
+        parent     &Node
+}
+
+fn (node Node) is_root() bool
 fn (node Node) get_elements_by_tag_name(name string) []&Node
 fn (node Node) get_element_by_tag_name(name string) !&Node
 fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node
