@@ -1,6 +1,6 @@
 module vxml
 
-struct Node {
+pub struct Node {
 pub mut:
 	attributes map[string]string
 	name       string
