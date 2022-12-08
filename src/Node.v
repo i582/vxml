@@ -10,11 +10,15 @@ pub mut:
 	parent     &Node
 }
 
+[inline]
+pub fn (node Node) is_root() bool {
+	return node.parent == unsafe { nil }
+}
+
 pub fn (node Node) get_elements_by_tag_name(name string) []&Node {
 	mut nodes := []&Node{}
-	is_root := node.parent == unsafe { nil }
 
-	if !is_root && node.name == name {
+	if !node.is_root() && node.name == name {
 		nodes << &node
 	}
 
@@ -39,9 +43,8 @@ pub fn (node Node) get_element_by_tag_name(name string) !&Node {
 
 pub fn (node Node) get_elements_by_predicate(predicate fn (&Node) bool) []&Node {
 	mut nodes := []&Node{}
-	is_root := node.parent == unsafe { nil }
 
-	if !is_root && predicate(&node) {
+	if !node.is_root() && predicate(&node) {
 		nodes << &node
 	}
 
